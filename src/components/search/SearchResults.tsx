@@ -32,7 +32,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, loading, onSelec
 
   return (
     <Animated.View style={styles.container}>
-      {loading && <ActivityIndicator style={styles.loader} />}
       <FlatList
         data={results}
         keyExtractor={(item) => item.place_id}

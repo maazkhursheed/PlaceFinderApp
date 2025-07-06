@@ -37,7 +37,7 @@ export const usePlacesStore = create<PlacesState>()(
         name: 'places-storage',
         getStorage: () => AsyncStorage,
         partialize: (state) => ({
-          history: state.history, 
+          history: state.history,
         }),
       }
     ),
