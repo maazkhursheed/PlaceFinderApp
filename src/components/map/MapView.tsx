@@ -1,47 +1,57 @@
 import React from 'react';
-import MapView, { Marker, Callout, Region } from 'react-native-maps';
+import MapView, { Marker, Callout, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View } from 'react-native';
-import { usePlacesStore } from '../../store/placesStore';
+import { useCurrentLocation } from '../../hooks/useCurrentLocation';
+
+interface Props {
+  location?: { lat: number; lng: number };
+  name?: string;
+  address?: string;
+}
 
 const DEFAULT_REGION: Region = {
-  latitude: 24.8607, 
-  longitude: 67.0011,
+  latitude: 3.139,
+  longitude: 101.6869,
   latitudeDelta: 0.05,
   longitudeDelta: 0.05,
 };
 
-const MapViewComponent: React.FC = () => {
-  const selectedPlace = usePlacesStore((state) => state.selectedPlace);
-  const location = selectedPlace?.location;
+const MapViewComponent: React.FC<Props> = ({ location, name, address }) => {
+  const { location: currentLocation } = useCurrentLocation();
 
-  const region: Region = location
-    ? {
-        latitude: location.lat,
-        longitude: location.lng,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }
-    : DEFAULT_REGION;
+  // Determine which location to use
+  const finalLat = location?.lat ?? currentLocation?.latitude ?? DEFAULT_REGION.latitude;
+  const finalLng = location?.lng ?? currentLocation?.longitude ?? DEFAULT_REGION.longitude;
+
+  const region: Region = {
+    latitude: finalLat,
+    longitude: finalLng,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
+  const shouldShowMarker = !!location || !!currentLocation || true; // always show at least 1 marker
+
+  const markerTitle = name ?? (location ? 'Selected Location' : currentLocation ? 'Your Location' : 'Kuala Lumpur');
+  const markerAddress = address ?? 'Kuala Lumpur, Malaysia';
 
   return (
     <MapView
       style={styles.map}
       region={region}
-      showsUserLocation
-      showsMyLocationButton
+      showsUserLocation={!!currentLocation}
+      showsMyLocationButton={true}
+      followsUserLocation={!!currentLocation}
     >
-      {location && (
+      {shouldShowMarker && (
         <Marker
-          coordinate={{
-            latitude: location.lat,
-            longitude: location.lng,
-          }}
+          coordinate={{ latitude: finalLat, longitude: finalLng }}
           pinColor="#6200ee"
         >
           <Callout tooltip>
             <View style={styles.callout}>
-              <Text style={styles.calloutTitle}>{selectedPlace?.name || 'Unnamed Place'}</Text>
-              <Text style={styles.calloutAddress}>{selectedPlace?.address || 'No address available'}</Text>
+              <Text style={styles.calloutTitle}>{markerTitle}</Text>
+              <Text style={styles.calloutAddress}>{markerAddress}</Text>
             </View>
           </Callout>
         </Marker>

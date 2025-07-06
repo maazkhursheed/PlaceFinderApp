@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import SearchBar from '../components/search/SearchBar';
-import MapView from '../components/map/MapView';
+import MapViewComponent from '../components/map/MapView';
 import { usePlacesStore } from '../store/placesStore';
 
 const SearchScreen = () => {
@@ -14,13 +14,13 @@ const SearchScreen = () => {
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.mapContainer}>
-          <MapView 
+          <MapViewComponent
             location={selectedPlace?.location}
             name={selectedPlace?.name}
-            address={selectedPlace?.address} />
+            address={selectedPlace?.address}
+          />
         </View>
 
-        {/* Floating search bar */}
         <View style={styles.searchBarContainer}>
           <SearchBar />
         </View>

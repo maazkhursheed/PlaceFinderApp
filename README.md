@@ -15,6 +15,13 @@ A professional React Native application that enables users to search for locatio
 - 🧪 Unit tests for key components  
 
 ---
+## 📸 Screenshots
+
+| Search History | Map View | Search Place | Empty History |
+|--------------|----------|----------------|------------------|
+| ![Search](./src/assets/screenshots/Screenshot%201.png) | ![Map](./src/assets/screenshots/Screenshot%202.png) | ![History](./src/assets/screenshots/Screenshot%203.png) | ![Current Location](./src/assets/screenshots/Screenshot%204.png) |
+
+---
 
 ## ⚙️ Requirements
 
@@ -66,57 +73,6 @@ yarn ios
 ```
 
 > ℹ️ Make sure you have an emulator/device running and the Google Maps API key is valid.
-
----
-
-## 🧪 Run Tests
-
-```bash
-yarn test
-```
-
-Test coverage includes:
-
-- ✅ `MapComponent`
-- ✅ `HistoryList`
-- ✅ `HomeScreen`
-
----
-
-## 📁 Project Structure
-
-```bash
-PlaceFinderApp/
-├── __tests__/
-│   ├── HistoryList.test.tsx
-│   ├── HomeScreen.test.tsx
-│   └── MapComponent.test.tsx
-├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── HistoryList.tsx
-│   │   ├── MapComponent.tsx
-│   │   └── SearchBar.tsx
-│   ├── navigation/
-│   │   └── index.tsx
-│   ├── screens/
-│   │   └── HomeScreen.tsx
-│   ├── services/
-│   │   └── api.ts
-│   ├── storage/
-│   │   └── historyStorage.ts
-│   ├── store/
-│   │   └── historyStore.ts
-│   └── utils/
-│       └── debounce.ts
-├── App.tsx
-├── .env
-├── .gitignore
-├── babel.config.js
-├── jest.config.js
-├── package.json
-└── README.md
-```
 
 ---
 
