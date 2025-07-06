@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Searchbar, ActivityIndicator } from 'react-native-paper';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -16,18 +16,21 @@ const SearchBar = () => {
   const { results, loading } = usePlaces(debouncedQuery);
   const { addToHistory, setSelectedPlace } = usePlacesStore();
 
-  const handleSelect = async (item: Prediction) => {
-    setQuery('');
-    const details = await getPlaceDetails(item.place_id);
-    const place = {
-      place_id: item.place_id,
-      name: details.result.name,
-      address: details.result.formatted_address,
-      location: details.result.geometry.location,
-    };
-    setSelectedPlace(place);
-    addToHistory(place);
-  };
+  const handleSelect = useCallback(
+    async (item: Prediction) => {
+      setQuery('');
+      const details = await getPlaceDetails(item.place_id);
+      const place = {
+        place_id: item.place_id,
+        name: details.result.name,
+        address: details.result.formatted_address,
+        location: details.result.geometry.location,
+      };
+      setSelectedPlace(place);
+      addToHistory(place);
+    },
+    [addToHistory, setSelectedPlace]
+  );
 
   return (
     <View>

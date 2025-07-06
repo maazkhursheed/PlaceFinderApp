@@ -13,9 +13,11 @@ const SearchScreen = () => {
       style={styles.container}
     >
       <SafeAreaView style={styles.container}>
-        {/* Map View as background */}
         <View style={styles.mapContainer}>
-          <MapView location={selectedPlace?.location} />
+          <MapView 
+            location={selectedPlace?.location}
+            name={selectedPlace?.name}
+            address={selectedPlace?.address} />
         </View>
 
         {/* Floating search bar */}

@@ -2,6 +2,7 @@ import React from 'react';
 import { List } from 'react-native-paper';
 import { Place } from '../../types';
 import { StyleSheet } from 'react-native';
+import LocationIcon from '../../assets/icons/location.svg';
 
 interface HistoryItemProps {
   place: Place;
@@ -12,8 +13,13 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ place, onPress }) => (
   <List.Item
     title={place.name}
     description={place.address}
-    left={props => <List.Icon {...props} icon="map-marker" color="#6200ee" />}
     onPress={() => onPress(place)}
+    left={props => (
+      <List.Icon
+        {...props}
+        icon={() => <LocationIcon width={24} height={24} fill="#6200ee" />}
+      />
+    )}
     style={styles.item}
     titleStyle={styles.title}
     descriptionStyle={styles.description}
@@ -28,7 +34,11 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     marginHorizontal: 8,
     borderRadius: 12,
-    elevation: 1,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   title: {
     fontWeight: '600',
@@ -40,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HistoryItem;
+export default React.memo(HistoryItem);

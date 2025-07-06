@@ -1,27 +1,34 @@
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet } from 'react-native';
-import { Place } from '../../types';
+import MapView, { Marker, Callout, Region } from 'react-native-maps';
+import { StyleSheet, Text, View } from 'react-native';
+import { usePlacesStore } from '../../store/placesStore';
 
-interface MapViewProps {
-  location?: {
-    lat: number;
-    lng: number;
-  };
-}
+const DEFAULT_REGION: Region = {
+  latitude: 24.8607, 
+  longitude: 67.0011,
+  latitudeDelta: 0.05,
+  longitudeDelta: 0.05,
+};
 
-const MapViewComponent: React.FC<MapViewProps> = ({ location }) => {
+const MapViewComponent: React.FC = () => {
+  const selectedPlace = usePlacesStore((state) => state.selectedPlace);
+  const location = selectedPlace?.location;
+
+  const region: Region = location
+    ? {
+        latitude: location.lat,
+        longitude: location.lng,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      }
+    : DEFAULT_REGION;
+
   return (
     <MapView
       style={styles.map}
-      region={{
-        latitude: location?.lat || 37.78825,
-        longitude: location?.lng || -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-      showsUserLocation={true}
-      showsMyLocationButton={true}
+      region={region}
+      showsUserLocation
+      showsMyLocationButton
     >
       {location && (
         <Marker
@@ -29,9 +36,15 @@ const MapViewComponent: React.FC<MapViewProps> = ({ location }) => {
             latitude: location.lat,
             longitude: location.lng,
           }}
-          title="Selected Place"
           pinColor="#6200ee"
-        />
+        >
+          <Callout tooltip>
+            <View style={styles.callout}>
+              <Text style={styles.calloutTitle}>{selectedPlace?.name || 'Unnamed Place'}</Text>
+              <Text style={styles.calloutAddress}>{selectedPlace?.address || 'No address available'}</Text>
+            </View>
+          </Callout>
+        </Marker>
       )}
     </MapView>
   );
@@ -41,6 +54,21 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  callout: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 8,
+    elevation: 4,
+  },
+  calloutTitle: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#6200ee',
+  },
+  calloutAddress: {
+    fontSize: 14,
+    color: '#555',
+  },
 });
 
-export default MapViewComponent;
+export default React.memo(MapViewComponent);

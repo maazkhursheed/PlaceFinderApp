@@ -8,7 +8,7 @@ export const usePlaces = (query: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (query.length > 2) {
+    if (query.length > 1) {
       setLoading(true);
       autocompletePlaces(query)
         .then(data => {

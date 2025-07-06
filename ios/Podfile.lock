@@ -1085,7 +1085,7 @@ PODS:
     - React-jsi (= 0.73.4)
     - React-logger (= 0.73.4)
     - React-perflogger (= 0.73.4)
-  - RNCAsyncStorage (1.24.0):
+  - RNCAsyncStorage (2.2.0):
     - React-Core
   - RNGestureHandler (2.27.1):
     - glog
@@ -1339,7 +1339,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: ceaeeb19e75912958625f72883d240640e8f40da
   React-utils: 8439db27c3745f6de9d67eb61f5600c8d624274c
   ReactCommon: cc18bd33c0fab03c67620da6a602dcc1704e66b4
-  RNCAsyncStorage: b6410dead2732b5c72a7fdb1ecb5651bbcf4674b
+  RNCAsyncStorage: b44e8a4e798c3e1f56bffccd0f591f674fb9198f
   RNGestureHandler: 2315a0f01075dca3539722e1567cd9e45a7011e0
   RNScreens: b12996ef8ef492d56d126400e8aef6e613c13ef6
   RNSVG: 70d9f7add64092eb33e975b75ee5fa04295318cc

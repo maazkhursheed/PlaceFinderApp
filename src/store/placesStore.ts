@@ -1,5 +1,5 @@
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Place } from '../types';
 
@@ -12,23 +12,37 @@ interface PlacesState {
 }
 
 export const usePlacesStore = create<PlacesState>()(
-  persist(
-    (set) => ({
-      history: [],
-      selectedPlace: null,
-      addToHistory: (place) => set((state) => {
-        const newHistory = [
-          place,
-          ...state.history.filter(item => item.place_id !== place.place_id),
-        ].slice(0, 10);
-        return { history: newHistory };
+  devtools(
+    persist(
+      (set, get) => ({
+        history: [],
+        selectedPlace: null,
+
+        addToHistory: (place) =>
+          set((state) => {
+            const newHistory = [
+              place,
+              ...state.history.filter((item) => item.place_id !== place.place_id),
+            ].slice(0, 10);
+            return { history: newHistory };
+          }, false, 'addToHistory'),
+
+        setSelectedPlace: (place) =>
+          set({ selectedPlace: place }, false, 'setSelectedPlace'),
+
+        clearHistory: () =>
+          set({ history: [] }, false, 'clearHistory'),
       }),
-      setSelectedPlace: (place) => set({ selectedPlace: place }),
-      clearHistory: () => set({ history: [] }),
-    }),
+      {
+        name: 'places-storage',
+        getStorage: () => AsyncStorage,
+        partialize: (state) => ({
+          history: state.history, 
+        }),
+      }
+    ),
     {
-      name: 'places-storage',
-      getStorage: () => AsyncStorage,
+      name: 'PlacesStore',
     }
   )
 );

@@ -42,9 +42,7 @@ You must enable the following APIs in your [Google Cloud Console](https://consol
    ```env
    GOOGLE_MAPS_API_KEY=your_google_api_key_here
    ```
-
-2. Ensure `.env` is listed in `.gitignore` to keep your API key secure.
-
+   
 ---
 
 ## 🚀 Getting Started

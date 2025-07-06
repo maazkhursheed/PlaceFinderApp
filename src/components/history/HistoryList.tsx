@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, StyleSheet, View, Text } from 'react-native';
 import HistoryItem from './HistoryItem';
 import { Place } from '../../types';
@@ -13,6 +13,14 @@ interface HistoryListProps {
 const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
   const clearHistory = usePlacesStore(state => state.clearHistory);
 
+  // ✅ Optimized item press handler
+  const handleSelect = useCallback(
+    (place: Place) => {
+      onSelect(place);
+    },
+    [onSelect]
+  );
+
   return (
     <View style={styles.container}>
       {history.length > 0 ? (
@@ -21,7 +29,7 @@ const HistoryList: React.FC<HistoryListProps> = ({ history, onSelect }) => {
             data={history}
             keyExtractor={(item) => item.place_id}
             renderItem={({ item }) => (
-              <HistoryItem place={item} onPress={onSelect} />
+              <HistoryItem place={item} onPress={handleSelect} />
             )}
             contentContainerStyle={styles.list}
           />

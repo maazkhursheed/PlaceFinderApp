@@ -1,0 +1,2 @@
+#include? "../../Pods/Target Support Files/Pods-PlaceFinderApp/Pods-PlaceFinderApp.debug.xcconfig"
+GOOGLE_MAPS_API_KEY=$(GOOGLE_MAPS_API_KEY)
