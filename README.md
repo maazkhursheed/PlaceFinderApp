@@ -26,10 +26,13 @@ A professional React Native application that enables users to search for locatio
 ## ⚙️ Requirements
 
 - Node.js ≥ 16.x  
-- Android Studio (for Android)  
-- Xcode (for iOS)  
 - Google Cloud account for API key  
-- React Native CLI (not Expo)  
+- For **React Native CLI** native builds:
+  - Android Studio (for Android)
+  - Xcode (for iOS / macOS)
+- For **Expo** workflow:
+  - Expo CLI (`npm install -g expo-cli`) and/or EAS CLI (optional)
+  - Expo Go app on device or simulator (for quick testing) 
 
 ---
 
@@ -70,13 +73,21 @@ yarn android
 
 # Run on iOS
 yarn ios
+
+# Expo (if using Expo workflow)
+# Start Expo dev tools
+expo start
+# Run on a connected Android device/emulator
+expo run:android
+# Run on a connected iOS device/simulator (macOS + Xcode)
+expo run:ios
 ```
 
 > ℹ️ Make sure you have an emulator/device running and the Google Maps API key is valid.
 
 ---
 
-> **Note:** This app uses a **React Native CLI** setup — not Expo. Ensure Xcode and/or Android Studio are installed and configured correctly.
+> **Note:** This app uses **React Native CLI** setup — and **Expo** both. Ensure Xcode and/or Android Studio are installed and configured correctly. If you use Expo, you can run quickly with expo start and test in Expo Go; some Google Maps native integrations may require the bare Expo workflow or EAS build for full native SDK support.
 
 ---
 
